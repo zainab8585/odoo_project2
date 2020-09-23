@@ -1,0 +1,72 @@
+<odoo>
+    <data>
+        <record id="view_form_todo_task" model="ir.ui.view">
+            <field name="name">To-do Task Form</field>
+            <field name="model">todo.task</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="do_toggle_done" type="object"
+                                string="Toggle Done" class="oe_highlight"/>
+                        <button name="do_clear_done" type="object"
+                                string="Clear All Done" class="oe_highlight" />
+                    </header>
+                    <sheet>
+                        <group name="group_top">
+                            <group name="group_left">
+                                <field name="name"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="is_done"/>
+                                <field name="active" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!--        start tree view -->
+        <record id="view_tree_todo_task" model="ir.ui.view">
+            <field name="name">To-do Task Tree</field>
+            <field name="model">todo.task</field>
+            <field name="arch" type="xml">
+                <tree colors="decoration-muted:is_done==True">
+                    <field name="name"/>
+                    <field name="is_done"/>
+                </tree>
+            </field>
+        </record>
+        <!--        end tree view-->
+        <!--        start search view -->
+        <record id="view_filter_todo_task" model="ir.ui.view">
+            <field name="name">To-do Task Filter</field>
+            <field name="model">todo.task</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <filter name ="group by state" string="Not Done"
+                            domain="[('is_done','=',False)]"/>
+                    <filter  name ='group by is done' string="Done"
+                            domain="[('is_done','!=',False)]"/>
+                </search>
+            </field>
+        </record>
+        <!--        end search view-->
+
+        <record id="action_todo_task" model="ir.actions.act_window">
+            <field name="name">To-Do Task</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">todo.task</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    create your first task
+                </p>
+            </field>
+        </record>
+        <!--    end action -->
+        <!-- Menu item to open To-do Task list -->
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="main_menu" name="Todos" web_icon="to_do__task,static/description/logo.png" action="action_todo_task" sequence="4"/>
+    </data>
+</odoo>
